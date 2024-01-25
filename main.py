@@ -37,11 +37,6 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
     # print("Received message:", update.message)
 
     if text == "/start":
-        """with open('hello.gif', 'rb') as photo:
-            await bot.send_photo(chat_id=chat_id, photo=photo)
-        await bot.send_message(chat_id=chat_id, text="Welcome to Cyclic Starter Python Telegram Bot!")
-    else:
-        await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text="Yo!")"""
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Hola,\nEste bot te ayudará a aumentar tus horas de juego en Steam\\.\nEscribe *_/help_* para ver los comandos disponibles\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
         
 
