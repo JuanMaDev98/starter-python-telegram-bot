@@ -42,7 +42,7 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
     elif text == "/config":
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
-    elif text == "/run":
+    elif text == "/farm":
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
 
     return {"ok": True}
