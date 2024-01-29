@@ -4,14 +4,14 @@ from fastapi import FastAPI, Header, HTTPException, Depends
 from telegram import Update, Bot
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, CallbackContext, ConversationHandler
 from pydantic import BaseModel
-from steam.client import SteamClient, EResult
+
 
 class TelegramUpdate(BaseModel):
     update_id: int
     message: dict
 
 app = FastAPI()
-client = SteamClient()
+
 
 # Load variables from .env file if present
 load_dotenv()
