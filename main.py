@@ -11,7 +11,7 @@ class TelegramUpdate(BaseModel):
     message: dict
 
 app = FastAPI()
-#client = SteamClient()
+client = SteamClient()
 
 # Load variables from .env file if present
 load_dotenv()
