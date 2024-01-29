@@ -49,8 +49,12 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
             await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/account_*, el formato correcto sería: \\ \n\n*_/account username password_*", parse_mode='MarkdownV2')
             return
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"*_Usuario de Steam_*:  {steam_user}\\\n*_Password de Steam_*: {steam_password}\\\n\n💾 Nueva configuración de la cuenta guardada", parse_mode='MarkdownV2')
-    elif text == "/games":
-        await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
+    elif text.startswith("/games"):
+        try:
+            steam_games = update.message["text"].split()[1:]
+        except IndexError:
+            await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/games_*, el formato correcto sería: \\ \n\n*_/games IDgame1 IDgame2 IDgame3 ... IDgame30_*\\ \n\nEl máximo de juegos a la vez es 30", parse_mode='MarkdownV2')
+        await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🎮 Lista de juegos actualizada a: \\ \n\n{steam_games}", parse_mode='MarkdownV2')
     elif text == "/farm":
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
     else:
