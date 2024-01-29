@@ -52,6 +52,7 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
     elif text.startswith("/games"):
         try:
             steam_games = update.message["text"].split()[1:]
+            print(steam_games)
         except IndexError:
             await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/games_*, el formato correcto sería: \\ \n\n*_/games IDgame1 IDgame2 IDgame3 ... IDgame30_*\\ \n\nEl máximo de juegos a la vez es 30", parse_mode='MarkdownV2')
             return
