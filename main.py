@@ -50,7 +50,7 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
         except IndexError:
             await bot.send_message(chat_id=chat_id, text=f"🚫 Mal uso del comando *_/account_*, el formato correcto sería: \\ \n\n*_/account username password_*", parse_mode='MarkdownV2')
             return
-        await bot.send_message(chat_id=chat_id, text=f"*_Usuario de Steam_*:  {steam_user}\\\n*_Password de Steam_*: {steam_password}\\\n\n💾 Nueva configuración de la cuenta guardada", parse_mode='MarkdownV2')
+        await bot.send_message(chat_id=chat_id, text=f"*_Usuario de Steam_*:  {steam_user}\n*_Password de Steam_*: {steam_password}\n\n💾 Nueva configuración de la cuenta guardada", parse_mode='MarkdownV2')
     elif text.startswith("/games"):
             steam_games = update.message["text"].split()[1:]
             if steam_games:
