@@ -4,12 +4,14 @@ from fastapi import FastAPI, Header, HTTPException, Depends
 from telegram import Update, Bot
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, CallbackContext, ConversationHandler
 from pydantic import BaseModel
+from steam.client import SteamClient, EResult
 
 class TelegramUpdate(BaseModel):
     update_id: int
     message: dict
 
 app = FastAPI()
+client = SteamClient()
 
 # Load variables from .env file if present
 load_dotenv()
@@ -57,8 +59,19 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
             else:
                 await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/games_*, el formato correcto sería: \\ \n\n*_/games IDgame1 IDgame2 IDgame3 \\.\\.\\. IDgame30_*\\ \n\nEl máximo de juegos a la vez es 30", parse_mode='MarkdownV2')
                 return
-    elif text == "/farm":
-        await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Usando este bot es muy simple aumentar tus horas de juego en Steam\\.\n\nComandos disponibles:\n *_/config_* \- configura tus credenciales de Steam\\.\n *_/farm_* \- comienza a farmear horas\\.\n\n[_Mi Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
+    elif text.startswith("/farm"):
+        try:
+            user_input = update.message["text"].split()
+            farming_time = int(user_input[1])
+            steam_guard_code = user_input[2]
+        except IndexError:
+            await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/farm_*, el formato correcto sería: \\ \n\n*_/farm time SteamGuardCode_*\\ \n\nDebes tener Steam Guard activo y poner el tiempo en horas exactas", parse_mode='MarkdownV2')
+            return
+        
+        account_login = client.login(username=steam_user, password=steam_password, two_factor_code=steam_guard_code)
+        client.games_played(steam_games)
+        client.run_forever()
+        await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Farmeando con éxito por {farming_time} horas en los juegos {steam_games}", parse_mode='MarkdownV2')
     else:
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Ese no es un comando válido, para más información de como usar el bot usa el comando *_/help_* o mira el tutorial en mi [_canal de Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
         
