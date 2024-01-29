@@ -11,7 +11,7 @@ class TelegramUpdate(BaseModel):
     message: dict
 
 app = FastAPI()
-client = SteamClient()
+#client = SteamClient()
 
 # Load variables from .env file if present
 load_dotenv()
@@ -68,9 +68,9 @@ async def handle_webhook(update: TelegramUpdate, token: str = Depends(auth_teleg
             await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Mal uso del comando *_/farm_*, el formato correcto sería: \\ \n\n*_/farm time SteamGuardCode_*\\ \n\nDebes tener Steam Guard activo y poner el tiempo en horas exactas", parse_mode='MarkdownV2')
             return
         
-        account_login = client.login(username=steam_user, password=steam_password, two_factor_code=steam_guard_code)
-        client.games_played(steam_games)
-        client.run_forever()
+        #account_login = client.login(username=steam_user, password=steam_password, two_factor_code=steam_guard_code)
+        #client.games_played(steam_games)
+        #client.run_forever()
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"Farmeando con éxito por {farming_time} horas en los juegos {steam_games}", parse_mode='MarkdownV2')
     else:
         await bot.send_message(chat_id=chat_id, reply_to_message_id=update.message["message_id"], text=f"🚫 Ese no es un comando válido, para más información de como usar el bot usa el comando *_/help_* o mira el tutorial en mi [_canal de Youtube_](https://www.youtube.com/channel/UCElCoULDa68Yzqi1slcWvKA?sub_confirmation=1)", parse_mode='MarkdownV2')
